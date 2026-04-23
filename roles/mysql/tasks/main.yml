@@ -1,0 +1,72 @@
+# - name: Install mysql
+#   apt:
+#     name: mysql-server
+#     state: present
+
+# - name: Install python mysql dependency
+#   apt:
+#     name:
+#       - python3-pymysql
+#       - python3-mysqldb
+#     state: present
+#     update_cache: yes
+
+# - name: Start mysql
+#   service:
+#     name: mysql
+#     state: started
+#     enabled: yes
+
+# - name: Create DB
+#   mysql_db:
+#     name: "{{ db_name | default('laravel_db') }}"
+#     state: present
+
+# - name: Create user
+#   mysql_user:
+#     name: "{{ db_user | default('laravel_user') }}"
+#     password: "{{ db_password | default('secret') }}"
+#     priv: "{{ db_name | default('laravel_db') }}.*:ALL"
+#     host: "{{ db_host | default('localhost') }}"
+#     state: present
+
+
+
+
+
+- name: Install MySQL + dependencies
+  apt:
+    name:
+      - mysql-server
+      - python3-pymysql
+    state: present
+    update_cache: yes
+
+- name: Start MySQL
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+
+# 🔥 IMPORTANT FIX STEP (THIS SOLVES YOUR ERROR)
+- name: Set MySQL root password (safe init method)
+  shell: |
+    mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'rootpass123';" || true
+  become: true
+
+- name: Create database
+  mysql_db:
+    name: "{{ db_name | default('laravel_db') }}"
+    state: present
+    login_user: root
+    login_password: rootpass123
+
+- name: Create database user
+  mysql_user:
+    name: "{{ db_user | default('laravel_user') }}"
+    password: "{{ db_password | default('secret') }}"
+    priv: "{{ db_name | default('laravel_db') }}.*:ALL"
+    host: "%"
+    state: present
+    login_user: root
+    login_password: rootpass123

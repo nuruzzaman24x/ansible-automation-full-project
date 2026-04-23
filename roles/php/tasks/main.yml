@@ -1,0 +1,30 @@
+- name: Install dependencies for adding repo
+  apt:
+    name:
+      - software-properties-common
+      - ca-certificates
+      - lsb-release
+      - apt-transport-https
+    state: present
+    update_cache: yes
+
+- name: Add Ondrej PHP repository
+  apt_repository:
+    repo: ppa:ondrej/php
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+# 🔥 ADD THIS BELOW
+- name: Install PHP
+  apt:
+    name:
+      - "php{{ php_version | default('8.2') }}"
+      - "php{{ php_version | default('8.2') }}-fpm"
+      - "php{{ php_version | default('8.2') }}-mysql"
+      - "php{{ php_version | default('8.2') }}-mbstring"
+      - "php{{ php_version | default('8.2') }}-xml"
+      - "php{{ php_version | default('8.2') }}-curl"
+      - "php{{ php_version | default('8.2') }}-zip"
+    state: present

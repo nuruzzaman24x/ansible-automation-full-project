@@ -1,0 +1,11 @@
+app_name: laravel-app
+project_path: /var/www/laravel
+
+php_version: "8.3"
+
+db_name: sena
+db_user: sena
+db_password: sena@3306
+db_host: localhost
+
+server_name: 172.17.0.233

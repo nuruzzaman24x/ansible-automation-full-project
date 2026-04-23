@@ -1,0 +1,20 @@
+- name: Install nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: Copy nginx config
+  template:
+    src: nginx-laravel.conf.j2
+    dest: /etc/nginx/sites-available/laravel
+
+- name: Enable site
+  file:
+    src: /etc/nginx/sites-available/laravel
+    dest: /etc/nginx/sites-enabled/laravel
+    state: link
+
+- name: Restart nginx
+  service:
+    name: nginx
+    state: restarted

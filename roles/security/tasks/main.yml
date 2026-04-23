@@ -1,0 +1,10 @@
+- name: Ensure SSH config safe mode
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PermitRootLogin'
+    line: 'PermitRootLogin yes'
+
+- name: Restart SSH
+  service:
+    name: ssh
+    state: restarted

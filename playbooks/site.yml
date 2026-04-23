@@ -1,0 +1,32 @@
+# - name: FULL LARAVEL PRODUCTION DEPLOYMENT
+#   hosts: app_servers
+#   become: true
+
+#   roles:
+#     - common
+#     - security
+#     - nginx
+#     - php
+#     - mysql
+#     - composer
+#     - laravel
+#     - deploy
+
+
+
+- name: FULL LARAVEL PRODUCTION DEPLOYMENT
+  hosts: app_servers
+  become: true
+
+  vars_files:
+    - ../group_vars/app_servers.yml
+
+  roles:
+    - common
+    - security
+    - nginx
+    - php
+    - mysql
+    - composer
+    - laravel
+    - deploy
