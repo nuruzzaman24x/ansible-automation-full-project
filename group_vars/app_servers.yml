@@ -1,5 +1,5 @@
-app_name: laravel-app
-project_path: /var/www/laravel
+app_name: deshishad
+project_root: /var/www/html
 
 php_version: "8.3"
 
